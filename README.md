@@ -1,5 +1,5 @@
 # Sparkly: portable machine learning spark applications
-A set of utilities for developing portable machine learning [Apache Spark](http://spark.apache.org/) applicationsi developed bu [Epiconcept](https://epiconcept.fr).
+A set of utilities for developing portable machine learning [Apache Spark](http://spark.apache.org/) applicationsi developed by [Epiconcept](https://epiconcept.fr).
 
 [Sparkly site](https://github.com/Epiconcept-Paris/sparkly)
 
