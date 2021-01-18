@@ -1,7 +1,7 @@
-package demy.mllib.index;
+package fr.epiconcept.sparkly.index;
 import org.apache.lucene.index.{DirectoryReader}
 import org.apache.lucene.search.{IndexSearcher}
-import demy.storage.{Storage, LocalNode}
+import fr.epiconcept.sparkly.storage.{Storage, LocalNode}
 
 case class StandardStrategy(searcher:IndexSearcher, indexDirectory:LocalNode,reader:DirectoryReader, usePopularity:Boolean = false) extends IndexStrategy {
   def this() = this(null, null, null, false)

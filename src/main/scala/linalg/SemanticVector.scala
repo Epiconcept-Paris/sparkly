@@ -1,4 +1,4 @@
-package demy.mllib.linalg;
+package fr.epiconcept.sparkly.linalg;
 
 case class Coordinate(index:Int, value:Double)
 case class SemanticVector(word:String, coord:Vector[Coordinate]) {

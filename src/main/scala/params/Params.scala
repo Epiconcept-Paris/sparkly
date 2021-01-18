@@ -1,4 +1,4 @@
-package demy.mllib.params
+package fr.epiconcept.sparkly.params
 
 import org.apache.spark.sql.Dataset
 import org.apache.spark.ml.param.{Param, ParamValidators, Params}

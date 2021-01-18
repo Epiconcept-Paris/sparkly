@@ -1,4 +1,4 @@
-package demy.mllib.index;
+package fr.epiconcept.sparkly.index;
 
 import org.apache.lucene.search.{IndexSearcher, TermQuery, BooleanQuery, FuzzyQuery, BoostQuery}
 import org.apache.lucene.search.BooleanClause.Occur
@@ -12,8 +12,8 @@ import org.apache.lucene.document.{Document, TextField, StringField, IntPoint, B
 import org.apache.spark.sql.catalyst.expressions.GenericRowWithSchema
 import java.io.{ObjectInputStream,ByteArrayInputStream}
 import scala.collection.JavaConverters._
-import demy.storage.{Storage, LocalNode}
-import demy.util.{log => l}
+import fr.epiconcept.sparkly.storage.{Storage, LocalNode}
+import fr.epiconcept.sparkly.util.{log => l}
 
 case class Ngram(terms:Array[String], startIndex:Int, endIndex:Int, termWeights:Seq[Double])
 object Ngram {

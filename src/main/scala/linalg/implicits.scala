@@ -1,8 +1,12 @@
-package demy.mllib.linalg;
+package fr.epiconcept.sparkly.linalg;
 
-import demy.mllib.util.MergedIterator
+import fr.epiconcept.sparkly.util.MergedIterator
 import org.apache.spark.ml.linalg.{DenseVector, SparseVector, Vector, Vectors}
 
+
+object BLAS {
+  lazy val i = com.github.fommil.netlib.BLAS.getInstance()
+}
 
 object implicits {
   lazy val blas = BLAS.i

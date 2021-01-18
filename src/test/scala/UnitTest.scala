@@ -1,13 +1,9 @@
-package demy.mllib.test
+package fr.epiconcept.sparkly.test
 
 import org.scalatest._
 
 
 class UnitTest()  extends FlatSpec {
-  def getSpark = SharedSpark.getSpark
-}
-
-class UnitTestVars  {
   def getSpark = SharedSpark.getSpark
 }
 

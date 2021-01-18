@@ -1,4 +1,4 @@
-package demy.mllib.text
+package fr.epiconcept.sparkly.text
 
 import org.apache.spark.ml.Transformer
 import org.apache.spark.ml.param.{Param, ParamMap}

@@ -1,4 +1,4 @@
-package demy.mllib.index;
+package fr.epiconcept.sparkly.index;
 
 import org.apache.lucene.analysis.CharacterUtils
 import org.apache.lucene.analysis.TokenFilter

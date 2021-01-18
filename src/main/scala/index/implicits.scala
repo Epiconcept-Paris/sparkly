@@ -1,4 +1,4 @@
-package demy.mllib.index;
+package fr.epiconcept.sparkly.index;
 
 import scala.collection.parallel.ForkJoinTaskSupport
 import org.apache.spark.sql.catalyst.expressions.GenericRowWithSchema
@@ -6,8 +6,8 @@ import org.apache.spark.sql.{Column, Dataset, Row}
 import org.apache.spark.sql.types._
 import org.apache.spark.sql.functions._
 import org.apache.hadoop.conf.Configuration
-import demy.storage.Storage
-import demy.util.{log => l}
+import fr.epiconcept.sparkly.storage.Storage
+import fr.epiconcept.sparkly.util.{log => l}
 import scala.collection.mutable.ArrayBuffer
 
 object implicits {
@@ -30,7 +30,7 @@ object implicits {
       , minScore:Double=0.0
       , boostAcronyms:Boolean=false
       , termWeightsColumnName:Option[String]=None
-      , strategy:String = "demy.mllib.index.StandardStrategy"
+      , strategy:String = "fr.epiconcept.sparkly.index.StandardStrategy"
       , strategyParams: Map[String, String]=Map.empty[String,String]
       , stopWords:Set[String]=Set[String]()
     ) = luceneLookups(
@@ -73,7 +73,7 @@ object implicits {
       , minScore:Double=0.0
       , boostAcronyms:Boolean=false
       , termWeightsColumnNames:Seq[Option[String]] = Seq[Option[String]]()
-      , strategy:String = "demy.mllib.index.StandardStrategy"
+      , strategy:String = "fr.epiconcept.sparkly.index.StandardStrategy"
       , strategyParams: Map[String, String]=Map.empty[String,String]
       , stopWords:Set[String]=Set[String]()
     ) = {
@@ -133,7 +133,7 @@ object implicits {
       , indexPartitions:Int = 1
     ) {
 
-      demy.util.log.msg(s"indexing $text")
+      fr.epiconcept.sparkly.util.log.msg(s"indexing $text")
       val sparkStorage = Storage.getSparkStorage
       val indexNode = sparkStorage.getNode(path = indexPath)
       val exists = indexNode.exists
@@ -196,7 +196,7 @@ object implicits {
       , termWeightsColumnNames:Seq[Option[String]]=Seq[Option[String]]()
       , caseInsensitive:Boolean = true
       , tokenizeRegex:Option[String]=Some("[^\\p{L}]+")
-      , strategy:String = "demy.mllib.index.StandardStrategy"
+      , strategy:String = "fr.epiconcept.sparkly.index.StandardStrategy"
       , strategyParams: Map[String, String]=Map.empty[String,String]
       , stopWords:Set[String]=Set[String]()
       

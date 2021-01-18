@@ -1,4 +1,4 @@
-package demy.mllib.index;
+package fr.epiconcept.sparkly.index;
 import org.apache.spark.sql.Row
 
 case class TextIndexCache(query:String, filter:Row, result:Row, on:Long = System.currentTimeMillis) extends Ordered [TextIndexCache] {

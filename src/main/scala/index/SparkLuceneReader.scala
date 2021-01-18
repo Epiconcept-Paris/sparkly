@@ -1,4 +1,4 @@
-package demy.mllib.index;
+package fr.epiconcept.sparkly.index;
 
 import org.apache.lucene.analysis.standard.StandardAnalyzer
 import org.apache.lucene.store.{NIOFSDirectory, FSDirectory, MMapDirectory}
@@ -6,12 +6,12 @@ import org.apache.lucene.index.{DirectoryReader, IndexWriter, IndexWriterConfig}
 import org.apache.lucene.search.{IndexSearcher, LRUQueryCache, UsageTrackingQueryCachingPolicy}
 import java.nio.file.{Paths}
 import org.apache.spark.sql.SparkSession
-import demy.storage.{Storage, LocalNode}
-import demy.storage.WriteMode
+import fr.epiconcept.sparkly.storage.{Storage, LocalNode}
+import fr.epiconcept.sparkly.storage.WriteMode
 import scala.reflect._
 import scala.reflect.runtime.universe
 import scala.collection.mutable.HashMap
-import demy.util.{log => l}
+import fr.epiconcept.sparkly.util.{log => l}
 
 case class SparkLuceneReader(indexPartition:String, reuseSnapShot:Boolean = false, useSparkFiles:Boolean = false,
                              usePopularity:Boolean=false, indexStrategy:String, strategyParams:Map[String,String]) {

@@ -1,4 +1,4 @@
-package demy.mllib.text
+package fr.epiconcept.sparkly.text
 
 import java.sql.Timestamp
 import org.apache.spark.sql.functions.{expr}

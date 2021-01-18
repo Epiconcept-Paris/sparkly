@@ -1,4 +1,4 @@
-package demy.mllib.index;
+package fr.epiconcept.sparkly.index;
 
 import org.apache.lucene.search.{IndexSearcher, TermQuery, BooleanQuery, FuzzyQuery}
 import org.apache.lucene.store.NIOFSDirectory
@@ -14,9 +14,9 @@ import org.apache.lucene.document.{Document, TextField, StringField, IntPoint, B
 import org.apache.spark.sql.catalyst.expressions.GenericRowWithSchema
 import java.io.{ObjectInputStream,ByteArrayInputStream}
 import scala.collection.JavaConverters._
-import demy.storage.LocalNode
-import demy.util.log
-import demy.util.implicits.IterableUtil
+import fr.epiconcept.sparkly.storage.LocalNode
+import fr.epiconcept.sparkly.util.log
+import fr.epiconcept.sparkly.util.implicits.IterableUtil
 
 case class PredictStrategy(searcher:IndexSearcher, indexDirectory:LocalNode, reader:DirectoryReader) extends IndexStrategy {
   def this() = this(null, null, null)

@@ -1,6 +1,6 @@
-package demy.mllib.index;
+package fr.epiconcept.sparkly.index;
 
-import demy.mllib.linalg.implicits._
+import fr.epiconcept.sparkly.linalg.implicits._
 import org.apache.spark.ml.linalg.{Vector => MLVector}
 
 trait VectorIndex {

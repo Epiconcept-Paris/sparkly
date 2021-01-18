@@ -1,9 +1,9 @@
-package demy.mllib.text
+package fr.epiconcept.sparkly.text
 
-import demy.mllib.params.HasExecutionMetrics
-import demy.mllib.index.implicits._
-import demy.mllib.index.VectorIndex
-import demy.mllib.util.log.{msg, debug}
+import fr.epiconcept.sparkly.params.HasExecutionMetrics
+import fr.epiconcept.sparkly.index.implicits._
+import fr.epiconcept.sparkly.index.VectorIndex
+import fr.epiconcept.sparkly.util.log.{msg, debug}
 import org.apache.spark.ml.Transformer
 import org.apache.spark.ml.util.Identifiable
 import org.apache.spark.ml.param.{Param, ParamMap}
@@ -150,13 +150,35 @@ class Word2VecApplier(override val uid: String) extends Transformer with HasExec
       }
       ret
     }
+    def simplifyText(word:String):String = {
+        val sb = new StringBuilder
+        var i = 0
+        while(i < word.length) {
+            val nextChar = if(i+1<word.length) word(i+1).toString.toLowerCase else "X"
+            sb.append(word(i).toString.toLowerCase match {
+                case "à" => "a" case "á" => "a" case "â" => "a" case "ã" => "a" case "ä" => "a" case "å" => "a" case "æ" => "a"
+                case "è" => "e" case "é" => "e" case "ê" => "e" case "ë" => "e" case "œ" => "e"
+                case "ì" => "i" case "í" => "i" case "î" => "i" case "ï" => "i" 
+                case "ð" => "o" case "ñ" => "o" case "ò" => "o" case "ó" => "o" case "ô" => "o" case "õ" => "o" case "ö" => "o" case "ø" => "o" 
+                case "ù" => "u" case "ú" => "u" case "û" => "u" case "ü" => "u"   
+                case "ç" => "c"
+                case "-" => " "
+                case "'" => " "
+                case "l" => if(nextChar == "'") {" " } else "l"
+                case "d" => if(nextChar == "'") {" " } else "d"
+                case other => other
+            })
+            i =  i + 1
+        }
+        sb.toString
+    }
     
     def applyCaseAccentsAndLimit(tokens:Seq[String], wordLimit:Int, simplify:Boolean, toLower:Boolean) = {
         if(simplify && !toLower) throw new Exception("Non Accent sensitive and case sensitive is not yet supported @epi")
         tokens
             .map(w => if(wordLimit>0) w.slice(0, wordLimit) else w)
             .map(w => if(toLower) w.toLowerCase else w)
-            .map(w => if(simplify) Word.simplifyText(w) else w)
+            .map(w => if(simplify) simplifyText(w) else w)
     }
     override def transformSchema(schema: StructType): StructType = {
       if(getOrDefault(sumWords))

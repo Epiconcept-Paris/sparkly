@@ -1,4 +1,4 @@
-package demy.mllib.text;
+package fr.epiconcept.sparkly.text;
 
 import org.apache.spark.ml.linalg.{Vector => MLVector}
 import org.apache.spark.ml.classification.{Classifier, ClassificationModel}
@@ -10,9 +10,9 @@ import org.apache.spark.sql.{Column, Dataset, Row}
 import org.apache.spark.ml.classification.{LinearSVC, LinearSVCModel}
 import org.apache.spark.ml.attribute.AttributeGroup
 import org.apache.spark.ml.param.shared._
-import demy.mllib.params.{HasProbabilityCol, HasFeaturesCol}
-import demy.mllib.index.implicits._
-import demy.mllib.linalg.implicits._
+import fr.epiconcept.sparkly.params.{HasProbabilityCol, HasFeaturesCol}
+import fr.epiconcept.sparkly.index.implicits._
+import fr.epiconcept.sparkly.linalg.implicits._
 import scala.math.{exp, log => Log}
 import org.apache.spark.sql.functions.{row_number, split, lower, size, col, udf, rand, array, lit, expr}
 import org.apache.spark.sql.expressions.Window
@@ -64,7 +64,7 @@ trait TermLikelyhoodEvaluatorBase extends Params with HasProbabilityCol with Has
 
     setDefault(wordColumnNameVectors -> "name", vectorColumnNameVectors -> "vectors", labelColumnName ->"isEntity", entitiesTrainingSetSize ->1000, nonEntititesTrainingSetSize -> 1000,
                maxIter -> 100, minstep -> 1e-10, sigma -> 1e-12, lucene_maxLevDistance -> 0, lucene_indexPath -> "hdfs:///data/geo/glove_word_vectors.parquet.index", lucene_boostAcronyms -> false,
-               lucene_minScore -> 0.0, lucene_strategy -> "demy.mllib.index.StandardStrategy", lucene_strategyParams -> Map.empty[String,String])
+               lucene_minScore -> 0.0, lucene_strategy -> "fr.epiconcept.sparkly.index.StandardStrategy", lucene_strategyParams -> Map.empty[String,String])
 
     def setVectors(value: DataFrame): this.type = set(vectors, value)
     def setEntities(value: DataFrame): this.type = set(entities, value)

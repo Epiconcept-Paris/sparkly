@@ -1,4 +1,4 @@
-package demy.mllib.index;
+package fr.epiconcept.sparkly.index;
 
 import org.apache.lucene.analysis.standard.StandardAnalyzer
 import java.nio.file.{Files, Paths, Path}
@@ -11,7 +11,7 @@ import org.apache.lucene.analysis.standard.StandardTokenizerFactory
 import org.apache.lucene.analysis.core.StopFilterFactory 
 import org.apache.lucene.analysis.TokenStream
 import org.apache.commons.lang.RandomStringUtils
-import demy.storage.Storage
+import fr.epiconcept.sparkly.storage.Storage
 
 case class SparkLuceneWriter(indexDestination:String, reuseSnapShot:Boolean=false, boostAcronyms:Boolean = false) {
   lazy val sparkStorage = Storage.getSparkStorage

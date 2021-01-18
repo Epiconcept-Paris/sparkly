@@ -1,4 +1,4 @@
-package demy.mllib.index;
+package fr.epiconcept.sparkly.index;
 
 import org.apache.lucene.index.{IndexWriter}
 import org.apache.lucene.store.{NIOFSDirectory, FSDirectory, MMapDirectory}
@@ -6,8 +6,8 @@ import org.apache.spark.sql.Row
 import org.apache.spark.sql.types._
 import org.apache.lucene.document.{Document, TextField, StringField, IntPoint, BinaryPoint, LongPoint, DoublePoint, FloatPoint, Field, StoredField, DoubleDocValuesField}
 import java.io.{ByteArrayOutputStream, ObjectOutputStream}
-import demy.storage.{FSNode, WriteMode}
-import demy.util.log
+import fr.epiconcept.sparkly.storage.{FSNode, WriteMode}
+import fr.epiconcept.sparkly.util.log
 case class SparkLuceneWriterInfo(writer:IndexWriter, index:FSDirectory, destination:FSNode){
   lazy val sourceNode = {
     destination.storage.localStorage.getNode(path = index.getDirectory().toString)
