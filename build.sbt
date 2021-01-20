@@ -5,7 +5,7 @@ lazy val root = (project in file("."))
     name := "sparkly",
     scalaVersion := "2.12.12",
     retrieveManaged := true,
-    version := "1.0-SNAPSHOT",
+    version := "1.0.3",
     libraryDependencies += "org.apache.spark" %% "spark-core" % sparkVersion,
     libraryDependencies += "org.apache.spark" %% "spark-sql" % sparkVersion, 
     libraryDependencies += "org.apache.spark" %% "spark-mllib" % sparkVersion,
@@ -56,6 +56,7 @@ lazy val root = (project in file("."))
     }
   )
 
+
  ThisBuild / organization := "com.github.epiconcept-paris"
  ThisBuild / organizationName := "Epiconcept"
  ThisBuild / organizationHomepage := Some(url("http://epiconcept.fr"))
@@ -83,9 +84,11 @@ lazy val root = (project in file("."))
 
    // Remove all additional repository other than Maven Central from POM
   ThisBuild / pomIncludeRepository := { _ => false }
-  ThisBuild / publishTo := {
-  val nexus = "https://oss.sonatype.org/"
-  if (isSnapshot.value) Some("snapshots" at nexus + "content/repositories/snapshots")
-  else Some("releases" at nexus + "service/local/staging/deploy/maven2")
-   }
+  ThisBuild / publishTo := sonatypePublishToBundle.value
+  
+  //{
+  //val nexus = "https://oss.sonatype.org/"
+  //if (isSnapshot.value) Some("snapshots" at nexus + "content/repositories/snapshots")
+  //else Some("releases" at nexus + "service/local/staging/deploy/maven2")
+  // }
   ThisBuild / publishMavenStyle := true

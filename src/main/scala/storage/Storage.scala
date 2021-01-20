@@ -12,7 +12,11 @@ import java.util.ArrayDeque
 import java.nio.file.{Files, Paths, Path => LPath}
 import java.nio.file.{StandardCopyOption,StandardOpenOption }
 import java.nio.charset.StandardCharsets
+import java.net.URI
+import javax.ws.rs.core.UriBuilder
 import scala.collection.JavaConverters._
+
+
 case class WriteMode(name:String) {
 } 
 object WriteMode {
@@ -51,6 +55,11 @@ trait FSNode {
       , attrPattern=Map[String, String]())
   def getWriter(writeMode:WriteMode) = storage.getWriter(this, writeMode)
   def getTextWriter(writerMode:WriteMode, charsetName:String) = this.storage.getTextWriter(this, writerMode, charsetName)
+  def copyTo(to:FSNode, writeMode:WriteMode = WriteMode.failIfExists) {
+    if(this.storage != to.storage || this.path !=to.path) {
+      to.setContent(content = this.getContent, writeMode = writeMode)
+    }
+  }
 }
 
 case class LocalNode(path:String, storage:LocalStorage, sparkCanRead:Boolean, attrs:Map[String, String]= Map[String, String]()) extends FSNode{
@@ -194,6 +203,42 @@ object Storage {
       case _ =>
         LocalStorage(sparkCanRead = true)
     }
+  }
+  lazy val getHDFSStorage = 
+    getSparkStorage match {
+      case s:HDFSStorage => s
+      case _ => HDFSStorage(hadoopConf = new Configuration())
+    }
+  def getEpiFilesStorage(vooUrl:String, user:String, pwd:String) = EpiFileStorage(vooUrl:String, user:String, pwd:String)
+
+  def getNode(path:String) = {
+    Some(path)
+      .map(path =>URI.create(path))
+      .map{uri =>  
+        Some(uri.getScheme)
+          .map{
+            case null => null
+            case s  => s.toLowerCase
+          }
+          .map{
+            case "http" => throw new NotImplementedError("sparkly storage does not implement HTTP yet")
+            case "file" => Storage.getLocalStorage.getNode(path) 
+            case "hdfs" => Storage.getHDFSStorage.getNode(path)
+            case "epi" => 
+              val epifilesUrl = UriBuilder.fromUri(uri).scheme("https").userInfo(null).replaceQuery("").replacePath("").build().toString
+              val user = uri.getUserInfo.split(":").head
+              val password = uri.getUserInfo.split(":").drop(1).mkString(":")
+              val name = uri.getPath.split("/").filter(_.size > 0).head 
+              val epiStorage = Storage.getEpiFilesStorage(vooUrl = epifilesUrl, user = user, pwd = password)
+              epiStorage.last(path=None, attrPattern=Map("name"->name)) match {
+                  case Some(f) => f
+                  case None => EpiFileNode(path = null, storage = epiStorage , attrs = Map("name"->name))   
+                }
+            case null => Storage.getSparkStorage.getNode(path)
+            case s => throw new NotImplementedError(s"Sparkly does not implement $s yet")
+          }
+          .get
+      }
   }
 }
 
